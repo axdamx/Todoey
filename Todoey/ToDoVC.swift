@@ -11,15 +11,18 @@ import UIKit
 class ToDoVC: UITableViewController {
     
     var itemArray = ["Ronaldo", "Messi", "Neymar"]
+    
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        if let items = UserDefaults.standard.array(forKey: "ToDoArrayKey") {
+            
+        itemArray = items as! [String]
+            
+        }
+        
     }
 
 
@@ -66,6 +69,8 @@ class ToDoVC: UITableViewController {
         let action = UIAlertAction(title: "Add item", style: .default) { (action) in
             
             self.itemArray.append(textField.text!)
+            
+            self.defaults.set(self.itemArray, forKey: "ToDoArrayKey")
             
             self.tableView.reloadData()
         }
